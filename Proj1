@@ -1,0 +1,82 @@
+//
+//  main.cpp
+//  AlgProj1
+//
+//  Created by Billy Giang on 9/15/15.
+//  Copyright (c) 2015 Billy Giang. All rights reserved.
+//
+// Assignment 1: Alternating disks problem, left-to-right algorithm
+// Jimmy Vo, Billy Giang, Michael Yan
+// Given 2n alternating disks (light, dark) the program reads the number of single color disks
+// (light or dark), arranges the disks in the correct order and outputs the number of swaps
+// INPUT: a positive integer n and a list of 2n disks of alternating colors dark-light, starting with dark
+// OUTPUT: a list of 2n disks, the first n disks are light, the next n disks are dark,
+// and an integer m representing the number of moves to move the dark ones after the light ones
+
+#include <iostream>
+#include <iomanip>
+#include <cstdlib>
+#include <string>
+
+using namespace std;
+
+void print_disks(int n, string disks)
+// YOU NEED TO IMPLEMENT THIS FUNCTION
+// function to print the list of disks, given the number of single color disks and the actual list
+// n represents the number of single color disks
+// disks represents the list of disks (index 0 being the first disk) where
+// 0 = a light color disk
+// 1 = a dark color disk
+{
+    for (int i = 0; i < n * 2; i++)
+    {
+        cout << disks[i];
+    }
+}
+
+int main()
+{
+    int numOfDisks;
+    int numOfSwaps = 0;
+    int temp;
+    string disks;
+    
+    // display the header
+    cout << endl << "CPSC 335-x - Programming Assignment #1" << endl;
+    cout << "The alternating disks problem: left-to-right algorithm" << endl;
+    cout << "Enter the number of single color disks (light or dark)" << endl;
+    
+    // read the number of disks
+    cin >> numOfDisks;
+    
+    // set the initial configurations for the disks to alternate
+    for (int i = 0; i < numOfDisks; i++)
+    {
+        disks.append("1"); // dark
+        disks.append("0"); // light
+    }
+    
+    // print the initial configuration of the list of disks
+    cout << "Initial configuration" << endl;
+    print_disks(numOfDisks, disks);
+    
+    // loop to push light one before darks ones
+    for (int k = 0; k * 2 < numOfDisks; k++)
+    {
+        temp = disks[k * 2];
+        disks[k * 2] = disks[(disks.length() - 1) - (k * 2)];
+        disks[(disks.length() - 1) - (k * 2)] = temp;
+        numOfSwaps++;
+    }
+    
+    // after shuffling them
+    cout << "\nAfter moving darker ones to the right" << endl;
+    print_disks(numOfDisks, disks);
+    
+    // print the total number of moves
+    cout << "\nNumber of swaps is " << numOfSwaps << endl;
+    
+    system("pause");
+    return EXIT_SUCCESS;
+}
+
